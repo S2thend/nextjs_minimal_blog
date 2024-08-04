@@ -1,0 +1,7 @@
+export const BASEURL = 'https://borui'
+export const title =  'borui\'s blog'
+export const description= 'This is borui\'s blog'
+export const siteName= 'borui\'s blog'
+export const locale= 'en_US'
+export const type= 'website'
+export const NAME= 'borui'
