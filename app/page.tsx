@@ -10,9 +10,6 @@ export default function Page() {
       <p className="mb-4">
         {HOME_CONTENT}
       </p>
-      <div className="my-8">
-        <BlogPosts />
-      </div>
     </section>
   )
 }
