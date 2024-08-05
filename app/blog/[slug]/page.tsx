@@ -4,7 +4,7 @@ import { formatDate, getBlogPosts } from 'app/blog/utils'
 import { baseUrl } from 'app/sitemap'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
-import {NAME} from '../../../blog.config'
+import {NAME,siteName} from '../../../blog.config'
 
 export async function generateStaticParams() {
   let posts = getBlogPosts()
@@ -75,6 +75,30 @@ export default function Blog({ params }) {
     parseFrontmatter: false,
   }
 
+  const copyright =
+  `
+  © ${post.metadata.publishedAt} ${NAME}. All rights reserved.
+
+  This content may be freely reproduced, displayed, modified, or distributed with proper attribution to ${NAME} and a link to the article: 
+  
+  ${NAME}(${post.metadata.publishedAt}). ${post.metadata.title}. ${baseUrl}/blog/${post.slug}.
+  `
+
+  const texRef =
+  `
+    \`\`\`
+    @misc{
+      ${NAME}${new Date(post.metadata.publishedAt).getFullYear().toString()},
+      author = {${NAME}},
+      title = {${post.metadata.title}},
+      year = {${new Date(post.metadata.publishedAt).getFullYear().toString()}},
+      publisher = {${siteName}},
+      journal = {${siteName}},
+      url={${baseUrl}/blog/${post.slug}}
+    }
+    \`\`\`
+  `
+
   return (
     <section>
       <link href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" rel="stylesheet"></link>
@@ -109,6 +133,10 @@ export default function Blog({ params }) {
         </p>
       </div>
       <article className="prose">
+        <code>
+          {copyright}
+        </code>
+        <CustomMDX source={texRef}/>
         <CustomMDX source={post.content} options={options}/>
       </article>
     </section>
